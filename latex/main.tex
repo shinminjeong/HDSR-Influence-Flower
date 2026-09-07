@@ -11,6 +11,18 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 
+\newcommand{\TODO}[1]{{\color{red} {\bf TODO:~}#1}}
+\newcommand{\verify}[1]{{\textcolor{red}{#1}}}
+\newcommand{\shorten}[1]{{\color{gray}{#1}}}
+\newcommand{\lx}[1]{{\color{violet}{#1}}}
+
+\usepackage[colorinlistoftodos]{todonotes}
+%\setlength{\marginparwidth}{2.5cm}
+% Define a custom font size (e.g., 6pt font with 7pt line spacing)
+%\newcommand{\customnotesize}{\fontsize{6pt}{7pt}\selectfont}
+\newcommand{\lxnote}[1]{\todo[linecolor=violet,backgroundcolor=violet!25,bordercolor=violet,size=footnotesize]{#1}}
+
+
 \begin{document}
 
 % Larger bottom margin for the first page
@@ -79,17 +91,26 @@
 
 
 %\section{Proposed Article}
-Citations, references, mentions, and hyperlinks leave quantitative traces of how ideas travel through scholarship and knowledge creation. Most assessments of academic impact compress these traces into scalar summaries and rankings. Influence Flower takes a different approach: it is a data-driven visual representation of the incoming and outgoing intellectual influence surrounding a paper, researcher, venue, or organization. The proposed article will use Influence Flower to examine two complementary questions. First, what can a relational visualization reveal that a ranking cannot? Second, what does it take to keep such a scholarly instrument useful when the data, software ecosystem, and operating conditions beneath it continue to change?
+Citations, references, mentions, and hyperlinks leave quantitative traces of how ideas travel through scholarship and knowledge creation. Most assessments of academic impact compress these traces into scalar summaries and rankings. Influence Flower takes a different approach: it is a data-driven visual representation 
+\lxnote{the contrast of ``visual representation'' and scalar summaries and rankings are not immediately clear}
+of the incoming and outgoing intellectual influence surrounding a paper, researcher, venue, or organization. The proposed article will use Influence Flower to examine two complementary questions. First, what can a relational visualization reveal that a ranking cannot? 
+\lxnote{are we contrasting all the work that looks like networks too?}
+Second, what does it take to keep such a scholarly instrument useful when the data, software ecosystem, and operating conditions beneath it continue to change?
 
 \section{Flower as a Visual Metaphor}
+\lxnote{``begin with the visual metaphor" reads unclear to me as a sign post, do we want to say ``introduce \ldots the metaphor" and then ``design chocies''}
 The article will begin with the visual metaphor itself, using the HDSR flower in \cref{fig:hdsr_flower} as an example. The flower is built from quantitative scholarly data, but it deliberately does not collapse those data into a single score. Direction distinguishes intellectual influences flowing into and out of the focal entity; arc thickness conveys relative strength; and color helps reveal asymmetry between the two directions. A ranking asks who has more impact. A flower instead invites questions such as where influence comes from, where it travels next, and whether those communities overlap. We will discuss the design choices behind this representation, including what information is gathered, highlighted, and suppressed, and how those choices shape its explanatory value.
+\lxnote{missing a mention of ``what we deliberately not include in the design''}
 
 This perspective supports qualitative inquiry beyond leaderboards. The 2019 Influence Flower work (\cite{shin2019influence}) demonstrated use cases such as tracing how a researcher's intellectual influences change over a career, identifying papers whose recognition accumulates slowly, summarising the interdisciplinary profile of an institution, and examining how the topical identity of a venue changes over time. These examples motivate a broader argument: scholarly influence is relational, directional, and temporal, and some of those properties are easier to inspect visually than through a scalar ranking. We will position the flower as an exploratory instrument for the science of science rather than as a replacement for quantitative measures of impact.
+\lxnote{I think this overview of the original versatile functions of HDSR is good, we could use this space to advertise some of them again} 
 
 
 
 \section{A Decade of Engineering Evolution}
+\lxnote{section title unclear to me, it may be better off just saying "X generations/iterations", I also suggest focusing on ``what are the improvements''}
 The second part of the article will tell the system history as a sequence of adaptation pressures rather than as a catalogue of technologies. The conceptual lineage began with static influence visualizations in 2016, while the software project took shape in 2017. Across the following decade, the implementation passed through five distinct eras: rapid prototyping with SQLite and Microsoft Academic Graph (MAG) (\cite{sinha2015overview}); an Elasticsearch-backed system that scaled search and scoring; the 2021 rewrite to a custom memory-mapped citation-graph scoring engine for low-latency computation; a migration from the retired MAG data source to OpenAlex(\cite{priem2022openalex}); and, in 2026, a refactor that removed runtime dependence on external scholarly APIs. For each era, we will use the same narrative structure: what changed, what became too costly or fragile, what adaptation followed, and which parts of the system could remain stable.
+\lxnote{this para is somewhat tangled up with the ecosystem change below.}
 
 The custom graph-scoring engine marks a central transition in this history. Integration with arXiv Labs required influence calculations to move beyond Elasticsearch queries and support arXiv-scale access. The engine stores the citation graph as memory-mapped binary arrays in compressed sparse row form and traverses them using Numba-compiled kernels, allowing fresh flowers to be computed on demand rather than precomputed. The arXiv Labs integration, merged in 2023, also changed the status of the project: a research artifact became a service embedded in other researchers' everyday browsing. Measurements from 2024-2025 show that roughly three quarters of visitors arrived through arXiv referrals, while the integration machinery generated on the order of 750,000 requests per month. Real users turned continued maintenance from an optional virtue into an operational obligation.
 
@@ -106,7 +127,7 @@ The article will close by returning to the life-cycle metaphor already present i
 
 \section{Fit for HDSR}
 
-The proposed article sits at the intersection of science of science, information visualization, data engineering, and research-software sustainability. It is not intended as a conventional systems paper or a retrospective release note. Instead, Influence Flower will serve as a concrete case study through which to discuss the scientific value of qualitative visualization and the engineering conditions that allow a public data-science artifact to remain useful over time. We expect the article to be accessible to technical readers and to scholars interested in how computational tools shape the study of science.
+\lxnote{I thought this section should be upfront} The proposed article sits at the intersection of science of science, information visualization, data engineering, and research-software sustainability. It is not intended as a conventional systems paper or a retrospective release note. Instead, Influence Flower will serve as a concrete case study through which to discuss the scientific value of qualitative visualization and the engineering conditions that allow a public data-science artifact to remain useful over time. We expect the article to be accessible to technical readers and to scholars interested in how computational tools shape the study of science.
 
 % All references should be stored in the file "references.bib"
 % Please do not modify anything below this line.
